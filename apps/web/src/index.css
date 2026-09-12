@@ -104,6 +104,30 @@ body {
   }
 }
 
+/* SATURNA Christmas & Winter — lightweight CSS-only snowfall */
+@keyframes snowfall {
+  from {
+    transform: translateY(-10%) translateX(0);
+  }
+  to {
+    transform: translateY(110vh) translateX(var(--snow-drift, 20px));
+  }
+}
+
+.snowflake {
+  position: absolute;
+  top: 0;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.8);
+  animation: snowfall linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowflake {
+    display: none;
+  }
+}
+
 .grain::after {
   content: '';
   position: fixed;

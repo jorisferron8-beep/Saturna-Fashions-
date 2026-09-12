@@ -16,6 +16,7 @@ const COLLECTION_LINKS = [
   { label: 'Dark Feminine', to: '/collections/dark-feminine' },
   { label: 'Street Luxe', to: '/collections/street-luxe' },
   { label: 'Night Edit', to: '/collections/night-edit' },
+  { label: 'Christmas & Winter', to: '/christmas' },
 ];
 
 const CLIENT_LINKS = [

@@ -15,6 +15,7 @@ import CollectionPage from './pages/CollectionPage';
 import LookbookPage from './pages/LookbookPage';
 import LookDetailPage from './pages/LookDetailPage';
 import PiecePage from './pages/PiecePage';
+import ChristmasPage from './pages/ChristmasPage';
 import { CartProvider } from './hooks/useCart';
 import { CurrencyProvider } from './context/CurrencyContext';
 import ShoppingCart from './components/ShoppingCart';
@@ -44,6 +45,7 @@ function App() {
                         <Route path="/looks" element={<LookbookPage />} />
                         <Route path="/looks/:slug" element={<LookDetailPage />} />
                         <Route path="/piece/:sku" element={<PiecePage />} />
+                        <Route path="/christmas" element={<ChristmasPage />} />
                     </Routes>
                     <ShoppingCart />
                     <CookieConsent />

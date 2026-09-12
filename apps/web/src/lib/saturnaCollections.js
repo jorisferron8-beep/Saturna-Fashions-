@@ -258,6 +258,29 @@ export const LOOKS = [
   },
 ];
 
+/**
+ * Christmas & Winter — a teaser season, not yet for sale. No products, no
+ * checkout: this only powers the "Coming Soon" page and its preview looks.
+ */
+export const SEASONAL = {
+  slug: 'christmas-winter',
+  name: 'Christmas & Winter',
+  tagline: 'A new season is coming.',
+  launchLabel: 'Coming Soon — December 2026',
+  heroImages: [PHOTOS.christmasWinterModel, PHOTOS.christmasBodysuitStill],
+  categories: [
+    { name: 'Christmas Edit', items: ['Party Tops', 'Corsets', 'Mini Dresses', 'Skirts'] },
+    { name: 'Winter Edit', items: ['Jackets', 'Hoodies', 'Knitwear', 'Winter Layers'] },
+    { name: 'Holiday Night', items: ['Evening Looks', 'Dark Feminine', 'Christmas Party'] },
+  ],
+  looks: [
+    { name: 'Look 01', image: PHOTOS.christmasBodysuitStill },
+    { name: 'Look 02', image: PHOTOS.christmasWinterModel },
+    { name: 'Look 03', image: PHOTOS.christmasBodysuitStill },
+    { name: 'Look 04', image: PHOTOS.christmasWinterModel },
+  ],
+};
+
 /** Simple client-side search across the flagship catalogue (no backend). */
 export function searchCatalog(query) {
   const q = query.trim().toLowerCase();

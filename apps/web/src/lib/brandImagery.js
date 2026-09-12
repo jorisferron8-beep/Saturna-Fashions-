@@ -22,6 +22,9 @@ export const PHOTOS = {
   darkRebelHalterStudio: `${BASE}/dark-rebel-halter-studio.jpg`,
   darkRebelDuoSaturna: `${BASE}/dark-rebel-duo-saturna.jpg`,
   darkRebelCargoStanding: `${BASE}/dark-rebel-cargo-standing.jpg`,
+  // Christmas & Winter teaser
+  christmasBodysuitStill: `${BASE}/christmas-bodysuit-still.jpg`,
+  christmasWinterModel: `${BASE}/christmas-winter-model.jpg`,
 };
 
 export const PLACEHOLDER_IMAGE =

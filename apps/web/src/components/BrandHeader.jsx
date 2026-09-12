@@ -12,6 +12,7 @@ const NAV = [
   { label: 'New In', to: '/#new-drop' },
   { label: 'Collections', to: '/#collections' },
   { label: 'Looks', to: '/looks' },
+  { label: 'Christmas', to: '/christmas' },
   { label: 'Store', to: '/store' },
   { label: 'About', to: '/about' },
 ];

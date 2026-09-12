@@ -14,7 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useGeoMarket } from '@/context/CurrencyContext';
 import { SATURNA_OG_IMAGE } from '@/lib/brand';
 import { PHOTOS } from '@/lib/brandImagery';
-import { COLLECTIONS, LOOKS, STORIES, getProduct, getProductsByCollection, getLookProducts } from '@/lib/saturnaCollections';
+import { COLLECTIONS, LOOKS, SEASONAL, STORIES, getProduct, getProductsByCollection, getLookProducts } from '@/lib/saturnaCollections';
 
 const NEW_DROP_SKUS = ['SAT-101', 'SAT-201', 'SAT-301', 'SAT-401'];
 const EDIT_SKUS = ['SAT-101', 'SAT-201', 'SAT-303', 'SAT-105', 'SAT-402', 'SAT-306', 'SAT-206', 'SAT-505'];
@@ -373,6 +373,26 @@ function ProductWall() {
   );
 }
 
+function ChristmasTeaser() {
+  return (
+    <section className="relative overflow-hidden border-t border-white/5 bg-[#0A0A0A] px-5 py-24 md:px-8 md:py-32">
+      <img src={SEASONAL.heroImages[0]} alt={SEASONAL.name} className="absolute inset-0 h-full w-full object-cover object-top opacity-40" loading="lazy" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/70 to-[#0A0A0A]/30" />
+      <div className="relative mx-auto flex max-w-[1440px] flex-col items-center text-center">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-[#A3182B]">{SEASONAL.launchLabel}</p>
+        <h2 className="mt-4 font-display text-4xl font-bold uppercase tracking-tight text-white md:text-6xl">{SEASONAL.name}</h2>
+        <p className="mt-3 font-display text-lg font-light italic text-white/80">{SEASONAL.tagline}</p>
+        <Link
+          to="/christmas"
+          className="mt-9 inline-flex items-center bg-white px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-black transition-colors hover:bg-[#F7F5F0]"
+        >
+          Discover the Collection
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 function Stories() {
   return (
     <section className="border-t border-white/5 bg-[#0A0A0A] px-5 py-20 md:px-8 md:py-28">
@@ -422,6 +442,7 @@ export default function HomePage() {
         <BrandStrip />
         <ShopTheLook />
         <ProductWall />
+        <ChristmasTeaser />
         <Stories />
       </main>
       <BrandFooter />
