@@ -11,6 +11,10 @@ import WooSyncAdminPage from './pages/WooSyncAdminPage';
 import ChinaBoutiquePage from './pages/ChinaBoutiquePage';
 import LegalPage from './pages/LegalPage';
 import RegionalBoutiquePage from './pages/RegionalBoutiquePage';
+import CollectionPage from './pages/CollectionPage';
+import LookbookPage from './pages/LookbookPage';
+import LookDetailPage from './pages/LookDetailPage';
+import PiecePage from './pages/PiecePage';
 import { CartProvider } from './hooks/useCart';
 import { CurrencyProvider } from './context/CurrencyContext';
 import ShoppingCart from './components/ShoppingCart';
@@ -36,6 +40,10 @@ function App() {
                         <Route path="/co" element={<RegionalBoutiquePage marketId="CO" />} />
                         <Route path="/hk" element={<RegionalBoutiquePage marketId="HK" />} />
                         <Route path="/legal" element={<LegalPage />} />
+                        <Route path="/collections/:slug" element={<CollectionPage />} />
+                        <Route path="/looks" element={<LookbookPage />} />
+                        <Route path="/looks/:slug" element={<LookDetailPage />} />
+                        <Route path="/piece/:sku" element={<PiecePage />} />
                     </Routes>
                     <ShoppingCart />
                     <CookieConsent />

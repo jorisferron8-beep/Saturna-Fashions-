@@ -10,6 +10,7 @@ import { useCurrency } from '@/context/CurrencyContext';
 import { useToast } from '@/hooks/use-toast';
 import { Seo } from '@/components/Seo';
 import { SATURNA_LOGO, SATURNA_OG_IMAGE } from '@/lib/brand';
+import { getReviewStats } from '@/lib/reviews';
 import {
   ELEGANCE_PRODUCTS,
   ELEGANCE_CATEGORIES,
@@ -28,27 +29,6 @@ const COLOR_HEX = {
 
 const placeholderImage =
   'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWMxYjIwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzVBMTgyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlNBVFVSTkE8L3RleHQ+PC9zdmc+';
-
-/**
- * Deterministic "reviews" for each SKU — stable across renders/filters
- * instead of re-randomizing, so a product always shows the same rating.
- * Ratings skew high (4.2–5.0), matching how boutique storefronts read.
- */
-function seededRandom(seed) {
-  let h = 0;
-  for (let i = 0; i < seed.length; i += 1) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
-  return () => {
-    h = (h * 1664525 + 1013904223) >>> 0;
-    return h / 4294967296;
-  };
-}
-
-function getReviewStats(sku) {
-  const rand = seededRandom(sku);
-  const rating = Math.round((4.2 + rand() * 0.8) * 10) / 10;
-  const count = Math.floor(9 + rand() * 210);
-  return { rating, count };
-}
 
 function ReviewStars({ sku }) {
   const { rating, count } = useMemo(() => getReviewStats(sku), [sku]);

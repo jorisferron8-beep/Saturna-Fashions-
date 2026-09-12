@@ -163,6 +163,12 @@ export default function AboutPage() {
                     <p className="mt-6 max-w-lg text-sm font-light leading-relaxed text-white/75 md:text-[15px]">
                         Dark luxury fashion for women 18–25. From Hong Kong to the world — structure, lace, cargo and attitude.
                     </p>
+                    <p className="mt-8 max-w-xl font-display text-xl font-bold uppercase leading-snug tracking-tight text-white md:text-2xl">
+                        SATURNA is a women&apos;s fashion brand built around dark femininity, street culture and individual expression.
+                    </p>
+                    <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.3em] text-[#A3182B]">
+                        Designed for the ones who don&apos;t follow the crowd.
+                    </p>
                 </div>
             </section>
 
