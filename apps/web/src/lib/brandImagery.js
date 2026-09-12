@@ -1,21 +1,27 @@
 /**
  * SATURNA editorial photography for the flagship pages (Home, Collections,
- * Looks, Piece). Five real shoot images, reused across roles the same way
- * the rest of the site reuses its small photo set — the only imagery this
- * project currently has for these pages.
+ * Looks, Piece). Twelve real shoot images, each assigned to specific
+ * collections/pieces below rather than looped generically — kept as
+ * individually named exports so callers pick a deliberate photo instead of
+ * reusing whichever one happens to be "first".
  */
 const BASE = '/photoshoot';
 
-export const IMG = {
-  hero: `${BASE}/street-luxe-bomber.jpg`,
-  street: `${BASE}/dark-city-crosswalk.jpg`,
-  coat: `${BASE}/street-luxe-bomber.jpg`,
-  blouse: `${BASE}/after-dark-rooftop.jpg`,
-  dress: `${BASE}/night-edit-bodysuit.jpg`,
-  cargo: `${BASE}/dark-city-crosswalk.jpg`,
-  laceDress: `${BASE}/dark-rebel-corset.jpg`,
-  satin: `${BASE}/night-edit-bodysuit.jpg`,
-  laceTop: `${BASE}/after-dark-rooftop.jpg`,
+export const PHOTOS = {
+  // Original five
+  streetLuxeBomber: `${BASE}/street-luxe-bomber.jpg`,
+  darkCityCrosswalk: `${BASE}/dark-city-crosswalk.jpg`,
+  darkRebelCorset: `${BASE}/dark-rebel-corset.jpg`,
+  nightEditBodysuit: `${BASE}/night-edit-bodysuit.jpg`,
+  afterDarkRooftop: `${BASE}/after-dark-rooftop.jpg`,
+  // Second batch
+  rebelRomperAlley: `${BASE}/rebel-romper-alley.jpg`,
+  streetLuxeDaylight: `${BASE}/street-luxe-daylight.jpg`,
+  darkFeminineLaceStudio: `${BASE}/dark-feminine-lace-studio.jpg`,
+  streetLuxeCargoNight: `${BASE}/street-luxe-cargo-night.jpg`,
+  darkRebelHalterStudio: `${BASE}/dark-rebel-halter-studio.jpg`,
+  darkRebelDuoSaturna: `${BASE}/dark-rebel-duo-saturna.jpg`,
+  darkRebelCargoStanding: `${BASE}/dark-rebel-cargo-standing.jpg`,
 };
 
 export const PLACEHOLDER_IMAGE =

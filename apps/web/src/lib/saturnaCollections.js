@@ -8,10 +8,14 @@
  * present SATURNA as a fashion house with named collections and styled
  * looks, not a flat product feed.
  *
+ * Photo assignments below are deliberate, not looped: within each
+ * collection's six pieces, and within any group shown together on one
+ * screen (New Drop, the SATURNA Wall), no two items share the same photo.
+ *
  * Prices are stored in USD cents so the Geo-Market engine can convert them
  * per active market via `formatFromUsdCents`.
  */
-import { IMG } from '@/lib/brandImagery';
+import { PHOTOS } from '@/lib/brandImagery';
 
 export const COLLECTIONS = [
   {
@@ -23,7 +27,7 @@ export const COLLECTIONS = [
       'Structured corsetry against raw denim and faux leather — the SATURNA woman who turns the street into her own runway.',
     tags: ['Gothic streetwear', 'Denim', 'Corsets', 'Mesh', 'Oversized'],
     filters: ['Tops', 'Bodies', 'Denim', 'Skirts', 'Jackets'],
-    image: IMG.street,
+    image: PHOTOS.darkRebelDuoSaturna,
   },
   {
     slug: 'dark-feminine',
@@ -34,7 +38,7 @@ export const COLLECTIONS = [
       'Second-skin silhouettes in lace and satin — softness sharpened into a statement.',
     tags: ['Lace', 'Bodies', 'Fitted silhouettes'],
     filters: ['Dresses', 'Bodies', 'Tops'],
-    image: IMG.laceDress,
+    image: PHOTOS.darkFeminineLaceStudio,
   },
   {
     slug: 'street-luxe',
@@ -45,7 +49,7 @@ export const COLLECTIONS = [
       'Oversized denim, structured blazers and utility trousers — street proportions with a luxury hand.',
     tags: ['Urban', 'Denim', 'Jackets', 'Oversized'],
     filters: ['Denim', 'Jackets', 'Blazers', 'Trousers'],
-    image: IMG.coat,
+    image: PHOTOS.streetLuxeCargoNight,
   },
   {
     slug: 'night-edit',
@@ -56,7 +60,7 @@ export const COLLECTIONS = [
       'Dresses, corsets and evening silhouettes built for the hours after sunset.',
     tags: ['Party', 'Evening', 'Dresses', 'Corsets'],
     filters: ['Dresses', 'Corsets', 'Bodies', 'Skirts', 'Jackets'],
-    image: IMG.satin,
+    image: PHOTOS.nightEditBodysuit,
   },
   {
     slug: 'essentials',
@@ -67,7 +71,7 @@ export const COLLECTIONS = [
       'The foundation of the SATURNA wardrobe — quiet, wearable, unmistakably dark feminine.',
     tags: ['Everyday', 'Layering', 'Foundation'],
     filters: ['Tops', 'Trousers', 'Dresses', 'Denim', 'Skirts'],
-    image: IMG.blouse,
+    image: PHOTOS.rebelRomperAlley,
   },
 ];
 
@@ -98,102 +102,102 @@ export const PRODUCTS = [
   // ---------------------------- Dark Rebel ----------------------------
   c(101, 'Rebel Corset', 'dark-rebel', 'Bodies', 89,
     'A structured black corset with exposed boning — the anchor piece of the Dark Rebel line.',
-    ['Black', 'Burgundy'], IMG.satin, IMG.coat),
+    ['Black', 'Burgundy'], PHOTOS.darkRebelHalterStudio, PHOTOS.darkRebelCorset),
   c(102, 'Rebel Denim', 'dark-rebel', 'Denim', 119,
     'Raw, high-rise denim cut for movement, distressed at the knee and hem.',
-    ['Black', 'Washed Grey'], IMG.laceTop, IMG.street),
+    ['Black', 'Washed Grey'], PHOTOS.streetLuxeDaylight, PHOTOS.darkCityCrosswalk),
   c(103, 'Faux Leather Jacket', 'dark-rebel', 'Jackets', 139,
     'Faux leather biker jacket with asymmetric zip and discreet hardware.',
-    ['Black'], IMG.hero, IMG.coat),
+    ['Black'], PHOTOS.streetLuxeBomber, PHOTOS.darkRebelDuoSaturna),
   c(104, 'Dark Bomber', 'dark-rebel', 'Jackets', 129,
     'Cropped bomber in matte nylon, quilted lining, ribbed cuffs.',
-    ['Black', 'Dark Chocolate'], IMG.coat, IMG.hero),
+    ['Black', 'Dark Chocolate'], PHOTOS.darkRebelCargoStanding, PHOTOS.streetLuxeBomber),
   c(105, 'Mesh Panel Top', 'dark-rebel', 'Tops', 59,
-    'Sheer mesh top with contrast seaming, worn alone or layered.',
-    ['Black'], IMG.blouse, IMG.laceTop),
+    'Open-knit mesh top with contrast seaming, worn alone or layered.',
+    ['Black'], PHOTOS.darkCityCrosswalk, PHOTOS.afterDarkRooftop),
   c(106, 'Rebel Mini Skirt', 'dark-rebel', 'Skirts', 69,
     'A-line mini in structured twill with a hidden zip closure.',
-    ['Black', 'Burgundy'], IMG.dress, IMG.satin),
+    ['Black', 'Burgundy'], PHOTOS.rebelRomperAlley, PHOTOS.darkRebelHalterStudio),
 
   // -------------------------- Dark Feminine ----------------------------
   c(201, 'Noir Lace Dress', 'dark-feminine', 'Dresses', 129,
     'Floor-grazing lace dress with a fitted bodice and sheer sleeves.',
-    ['Black'], IMG.laceDress, IMG.dress),
+    ['Black'], PHOTOS.darkFeminineLaceStudio, PHOTOS.darkRebelCorset),
   c(202, 'Second Skin Bodysuit', 'dark-feminine', 'Bodies', 79,
     'Second-skin bodysuit in matte satin — the base layer of the Dark Feminine wardrobe.',
-    ['Black', 'Ivory'], IMG.satin, IMG.blouse),
+    ['Black', 'Ivory'], PHOTOS.nightEditBodysuit, PHOTOS.darkFeminineLaceStudio),
   c(203, 'Sheer Lace Top', 'dark-feminine', 'Tops', 59,
     'Chantilly lace top, fully lined, with a scalloped neckline.',
-    ['Black', 'Ivory'], IMG.blouse, IMG.laceTop),
+    ['Black', 'Ivory'], PHOTOS.afterDarkRooftop, PHOTOS.darkFeminineLaceStudio),
   c(204, 'Fitted Slip Dress', 'dark-feminine', 'Dresses', 99,
     'Bias-cut slip dress in liquid satin, cut to fall close to the body.',
-    ['Black', 'Burgundy'], IMG.dress, IMG.laceDress),
+    ['Black', 'Burgundy'], PHOTOS.darkRebelCorset, PHOTOS.nightEditBodysuit),
   c(205, 'Velvet Corset Top', 'dark-feminine', 'Bodies', 89,
     'Velvet corset top with adjustable back lacing and boned structure.',
-    ['Black', 'Dark Chocolate'], IMG.coat, IMG.satin),
+    ['Black', 'Dark Chocolate'], PHOTOS.darkRebelHalterStudio, PHOTOS.darkRebelCorset),
   c(206, 'Lace Cami', 'dark-feminine', 'Tops', 49,
     'Delicate lace-trim camisole, worn solo or under tailoring.',
-    ['Black', 'Ivory'], IMG.laceTop, IMG.blouse),
+    ['Black', 'Ivory'], PHOTOS.darkCityCrosswalk, PHOTOS.afterDarkRooftop),
 
   // ---------------------------- Street Luxe ----------------------------
   c(301, 'Oversized Denim Jacket', 'street-luxe', 'Jackets', 139,
     'Oversized trucker jacket in rigid denim with dropped shoulders.',
-    ['Washed Grey', 'Black'], IMG.laceTop, IMG.street),
+    ['Washed Grey', 'Black'], PHOTOS.streetLuxeDaylight, PHOTOS.darkCityCrosswalk),
   c(302, 'Tailored Cargo Trouser', 'street-luxe', 'Trousers', 99,
     'Wide-leg cargo trouser in technical twill with utility pockets.',
-    ['Black', 'Dark Chocolate'], IMG.cargo, IMG.street),
+    ['Black', 'Dark Chocolate'], PHOTOS.streetLuxeCargoNight, PHOTOS.darkRebelCargoStanding),
   c(303, 'Structured Blazer', 'street-luxe', 'Blazers', 149,
     'Sharp-shouldered blazer in a heavyweight wool blend, single button.',
-    ['Black'], IMG.coat, IMG.cargo),
+    ['Black'], PHOTOS.darkRebelDuoSaturna, PHOTOS.streetLuxeDaylight),
   c(304, 'Street Bomber', 'street-luxe', 'Jackets', 129,
     'Boxy bomber with contrast ribbing and an oversized fit.',
-    ['Black', 'Burgundy'], IMG.hero, IMG.coat),
+    ['Black', 'Burgundy'], PHOTOS.streetLuxeBomber, PHOTOS.streetLuxeCargoNight),
   c(305, 'Wide-Leg Denim', 'street-luxe', 'Denim', 109,
     'High-rise, wide-leg denim with a clean, undistressed finish.',
-    ['Washed Grey'], IMG.street, IMG.laceTop),
+    ['Washed Grey'], PHOTOS.darkRebelCargoStanding, PHOTOS.streetLuxeDaylight),
   c(306, 'Utility Vest', 'street-luxe', 'Tops', 79,
     'Multi-pocket utility vest in washed cotton canvas.',
-    ['Black'], IMG.blouse, IMG.cargo),
+    ['Black'], PHOTOS.darkCityCrosswalk, PHOTOS.darkRebelDuoSaturna),
 
   // ----------------------------- Night Edit -----------------------------
   c(401, 'After Dark Slip Dress', 'night-edit', 'Dresses', 149,
     'Liquid satin slip dress with a low back — built for the hours after sunset.',
-    ['Black', 'Burgundy'], IMG.satin, IMG.laceDress),
+    ['Black', 'Burgundy'], PHOTOS.afterDarkRooftop, PHOTOS.darkFeminineLaceStudio),
   c(402, 'Evening Corset', 'night-edit', 'Corsets', 99,
     'Boned evening corset in duchess satin, worn as outerwear or under tailoring.',
-    ['Black', 'Burgundy'], IMG.laceDress, IMG.satin),
+    ['Black', 'Burgundy'], PHOTOS.darkRebelHalterStudio, PHOTOS.darkRebelCorset),
   c(403, 'Velvet Evening Dress', 'night-edit', 'Dresses', 159,
     'Fitted velvet dress with a thigh-high slit and sculpted neckline.',
-    ['Black', 'Dark Chocolate'], IMG.dress, IMG.satin),
+    ['Black', 'Dark Chocolate'], PHOTOS.darkRebelCorset, PHOTOS.afterDarkRooftop),
   c(404, 'Sculptural Bodysuit', 'night-edit', 'Bodies', 89,
     'Sculptural bodysuit with a structured neckline for evening layering.',
-    ['Black'], IMG.satin, IMG.dress),
+    ['Black'], PHOTOS.nightEditBodysuit, PHOTOS.darkFeminineLaceStudio),
   c(405, 'Satin Evening Skirt', 'night-edit', 'Skirts', 109,
     'Bias-cut satin maxi skirt with a fluid, floor-length drape.',
-    ['Black', 'Burgundy'], IMG.cargo, IMG.satin),
+    ['Black', 'Burgundy'], PHOTOS.darkCityCrosswalk, PHOTOS.afterDarkRooftop),
   c(406, 'Night Cape Jacket', 'night-edit', 'Jackets', 139,
     'Cape-sleeve jacket in matte satin, worn open over evening pieces.',
-    ['Black'], IMG.coat, IMG.laceDress),
+    ['Black'], PHOTOS.streetLuxeBomber, PHOTOS.darkRebelDuoSaturna),
 
   // ----------------------------- Essentials -----------------------------
   c(501, 'Essential Rib Top', 'essentials', 'Tops', 39,
     'Fitted ribbed top in a heavyweight cotton blend — a daily foundation piece.',
-    ['Black', 'Ivory'], IMG.blouse, IMG.laceTop),
+    ['Black', 'Ivory'], PHOTOS.rebelRomperAlley, PHOTOS.streetLuxeDaylight),
   c(502, 'Everyday Slip Dress', 'essentials', 'Dresses', 79,
     'Simple, fluid slip dress for daytime layering or worn alone.',
-    ['Black', 'Dark Chocolate'], IMG.dress, IMG.blouse),
+    ['Black', 'Dark Chocolate'], PHOTOS.darkRebelCorset, PHOTOS.rebelRomperAlley),
   c(503, 'Essential Tailored Trouser', 'essentials', 'Trousers', 89,
     'Straight-leg tailored trouser in a mid-weight twill.',
-    ['Black'], IMG.street, IMG.cargo),
+    ['Black'], PHOTOS.darkRebelCargoStanding, PHOTOS.darkRebelDuoSaturna),
   c(504, 'Core Tank', 'essentials', 'Tops', 35,
     'Cropped core tank in soft jersey, made to be layered.',
-    ['Black', 'Ivory'], IMG.laceTop, IMG.blouse),
+    ['Black', 'Ivory'], PHOTOS.darkCityCrosswalk, PHOTOS.rebelRomperAlley),
   c(505, 'Everyday Denim', 'essentials', 'Denim', 99,
     'Straight-leg denim in a mid-wash, cut for daily wear.',
-    ['Washed Grey'], IMG.laceTop, IMG.street),
+    ['Washed Grey'], PHOTOS.streetLuxeDaylight, PHOTOS.darkCityCrosswalk),
   c(506, 'Soft Knit Skirt', 'essentials', 'Skirts', 69,
     'Midi skirt in a soft rib knit with a relaxed A-line fall.',
-    ['Black', 'Dark Chocolate'], IMG.cargo, IMG.dress),
+    ['Black', 'Dark Chocolate'], PHOTOS.streetLuxeCargoNight, PHOTOS.rebelRomperAlley),
 ];
 
 export function getCollection(slug) {
@@ -213,7 +217,7 @@ export const LOOKS = [
   {
     slug: 'rebel-night',
     name: 'Rebel Night',
-    image: IMG.hero,
+    image: PHOTOS.streetLuxeBomber,
     skus: ['SAT-101', 'SAT-102', 'SAT-103'],
     hotspots: [
       { sku: 'SAT-101', x: 42, y: 52 },
@@ -224,7 +228,7 @@ export const LOOKS = [
   {
     slug: 'dark-city',
     name: 'Dark City',
-    image: IMG.street,
+    image: PHOTOS.darkCityCrosswalk,
     skus: ['SAT-301', 'SAT-302', 'SAT-306'],
     hotspots: [
       { sku: 'SAT-301', x: 38, y: 30 },
@@ -235,17 +239,17 @@ export const LOOKS = [
   {
     slug: 'after-dark',
     name: 'After Dark',
-    image: IMG.satin,
+    image: PHOTOS.darkRebelDuoSaturna,
     skus: ['SAT-401', 'SAT-402'],
     hotspots: [
-      { sku: 'SAT-401', x: 45, y: 55 },
-      { sku: 'SAT-402', x: 55, y: 32 },
+      { sku: 'SAT-401', x: 30, y: 55 },
+      { sku: 'SAT-402', x: 65, y: 45 },
     ],
   },
   {
     slug: 'dark-feminine-edit',
     name: 'Dark Feminine',
-    image: IMG.laceDress,
+    image: PHOTOS.darkFeminineLaceStudio,
     skus: ['SAT-201', 'SAT-205'],
     hotspots: [
       { sku: 'SAT-201', x: 48, y: 60 },
@@ -268,24 +272,24 @@ export const STORIES = [
     slug: 'dark-rebel-city',
     title: 'The Dark Rebel City',
     text: 'Corsetry and raw denim on the streets that never quite sleep.',
-    image: IMG.street,
+    image: PHOTOS.darkCityCrosswalk,
   },
   {
     slug: 'night-edit',
     title: 'The Night Edit',
     text: 'Satin and structure, styled for the hours after dark.',
-    image: IMG.satin,
+    image: PHOTOS.nightEditBodysuit,
   },
   {
     slug: 'dark-feminine',
     title: 'Dark Feminine',
     text: 'Lace, bodies and fitted silhouettes — softness, sharpened.',
-    image: IMG.laceDress,
+    image: PHOTOS.darkFeminineLaceStudio,
   },
   {
     slug: 'new-generation',
     title: 'The New Generation',
     text: 'The SATURNA universe, built for women 18–25.',
-    image: IMG.blouse,
+    image: PHOTOS.rebelRomperAlley,
   },
 ];

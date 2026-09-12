@@ -10,7 +10,7 @@ import { useCart } from '@/hooks/useCart';
 import { useToast } from '@/hooks/use-toast';
 import { useGeoMarket } from '@/context/CurrencyContext';
 import { SATURNA_OG_IMAGE } from '@/lib/brand';
-import { IMG } from '@/lib/brandImagery';
+import { PHOTOS } from '@/lib/brandImagery';
 import { COLLECTIONS, LOOKS, STORIES, getProduct, getLookProducts } from '@/lib/saturnaCollections';
 
 const NEW_DROP_SKUS = ['SAT-101', 'SAT-201', 'SAT-301', 'SAT-401'];
@@ -19,7 +19,7 @@ const FEATURED_LOOK = LOOKS[0]; // Rebel Night
 function Hero() {
   return (
     <section className="relative flex min-h-[92dvh] items-end overflow-hidden bg-[#0A0A0A]">
-      <img src={IMG.hero} alt="SATURNA — Dark. Feminine. Unbound." className="absolute inset-0 h-full w-full object-cover object-[center_20%]" />
+      <img src={PHOTOS.streetLuxeBomber} alt="SATURNA — Dark. Feminine. Unbound." className="absolute inset-0 h-full w-full object-cover object-[center_20%]" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/15" />
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col justify-end px-5 pb-20 pt-32 md:px-8 md:pb-28">
         <h1 className="font-display text-6xl font-bold uppercase leading-[0.88] tracking-tight text-white md:text-8xl lg:text-9xl">
@@ -54,7 +54,7 @@ function NewDrop() {
         </div>
         <div className="grid gap-5 lg:grid-cols-2 lg:gap-8">
           <div className="relative aspect-[4/5] overflow-hidden lg:aspect-auto">
-            <img src={IMG.street} alt="SATURNA — The New Drop" className="h-full w-full object-cover" loading="lazy" />
+            <img src={PHOTOS.darkCityCrosswalk} alt="SATURNA — The New Drop" className="h-full w-full object-cover" loading="lazy" />
           </div>
           <div className="grid grid-cols-2 gap-5 md:gap-6">
             {pieces.map((p) => <PieceCard key={p.sku} piece={p} />)}
@@ -189,19 +189,19 @@ function ProductWall() {
         <h2 className="mb-14 font-display text-4xl font-bold uppercase tracking-tight text-black md:text-5xl">The SATURNA Wall</h2>
         <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-6">
           <div className="col-span-2 row-span-2">
-            <PieceCard piece={getProduct('SAT-102')} dark={false} />
+            <PieceCard piece={getProduct('SAT-304')} dark={false} />
           </div>
-          <PieceCard piece={getProduct('SAT-202')} dark={false} />
+          <PieceCard piece={getProduct('SAT-105')} dark={false} />
           <div className="row-span-2 overflow-hidden">
             <Link to="/looks" className="group relative block h-full min-h-[280px]">
-              <img src={IMG.laceDress} alt="SATURNA look" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+              <img src={PHOTOS.darkRebelDuoSaturna} alt="SATURNA look" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <span className="absolute bottom-4 left-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-white">View the Look</span>
             </Link>
           </div>
-          <PieceCard piece={getProduct('SAT-303')} dark={false} />
+          <PieceCard piece={getProduct('SAT-204')} dark={false} />
           <div className="col-span-2">
-            <PieceCard piece={getProduct('SAT-403')} dark={false} />
+            <PieceCard piece={getProduct('SAT-104')} dark={false} />
           </div>
         </div>
       </div>
