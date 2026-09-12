@@ -1,8 +1,8 @@
 ## Pages
-- [— SATURNA | 商店](/product/:id): No description available
+- [— SATURNA | Shop](/product/:id): No description available
 - [SATURNA · Geo-Market Engine — Administración](/admin/geo-market): Panel de administración del motor multi-mercados SATURNA: USA, Colombia, China y Hong Kong.
 - [SATURNA · Sync WooCommerce — Administración](/admin/sync): Panel de sincronización de catálogo SATURNA con WooCommerce: estado, guía de uso y mapeo de mercados.
 - [SATURNA ELEGANCE — Redefined | Dark Feminine Luxury](/elegancia): SATURNA ELEGANCE — a darker expression of feminine elegance. Refined silhouettes in satin, lace, velvet and leather. Discover the collection: dresses, corsets, bodysuits, evening wear and signature pieces.
 - [SATURNA™ — Centro Legal · Documentos y Políticas](/legal): Centro legal SATURNA™: aviso legal, términos, privacidad, cookies, protección al consumidor, propiedad intelectual, reclamaciones, envíos, devoluciones, pagos, China/Hong Kong e información corporativa.
 - [SATURNA™ China / Hong Kong — Dark Modern Luxury](/cn): SATURNA™ dark modern luxury boutique for China and Hong Kong. Corsets, bodysuits, tops, jackets and dresses. Editorial fashion ecommerce.
-- [商店 / Shop — SATURNA™ | 中国 · 香港 · 全球](/store): SATURNA™ 女装精品店。胸衣、工装、蕾丝、外套。面向 18–25 岁。香港运营，全球配送。
+- [Store / Shop — SATURNA™ | China · Hong Kong · Worldwide](/store): SATURNA™ womenswear boutique. Corsets, cargo, lace, jackets. For ages 18–25. Hong Kong operated, worldwide shipping.

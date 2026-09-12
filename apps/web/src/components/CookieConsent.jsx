@@ -44,7 +44,7 @@ export default function CookieConsent() {
         <div
             role="dialog"
             aria-live="polite"
-            aria-label="Consentimiento de cookies"
+            aria-label="Cookie consent"
             className="fixed inset-x-0 bottom-0 z-[95] px-4 pb-4 md:px-6 md:pb-6"
         >
             <div className="mx-auto max-w-3xl border border-white/10 bg-[#0A0A0A] text-[#F7F5F0] shadow-2xl">
@@ -55,21 +55,18 @@ export default function CookieConsent() {
                         </span>
                         <div>
                             <p className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-white">
-                                Cookies &amp; Privacidad
+                                Cookies &amp; Privacy
                             </p>
                             <p className="mt-1.5 text-[12px] font-light leading-relaxed text-white/70">
-                                Usamos cookies técnicas (esenciales) y analíticas para mejorar su
-                                experiencia en SATURNA™. Puede aceptar todas o conservar solo las
-                                esenciales.
-                                <span className="mt-0.5 block text-white/45">
-                                    我们使用必要和分析类 Cookie 以改善您的体验。您可全部接受或仅保留必要 Cookie。
-                                </span>
+                                We use technical (essential) and analytics cookies to improve your
+                                experience on SATURNA™. You can accept all or keep only the essential
+                                ones.
                             </p>
                             <Link
                                 to="/legal"
                                 className="mt-2 inline-block border-b border-white/40 pb-0.5 text-[10px] font-medium uppercase tracking-[0.2em] text-white/70 transition-colors hover:border-white hover:text-white"
                             >
-                                Política de Cookies
+                                Cookie Policy
                             </Link>
                         </div>
                     </div>
@@ -80,21 +77,21 @@ export default function CookieConsent() {
                             onClick={() => choose('all')}
                             className="bg-white px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-black transition-colors hover:bg-[#F7F5F0] active:scale-[0.98]"
                         >
-                            Aceptar todas
+                            Accept all
                         </button>
                         <button
                             type="button"
                             onClick={() => choose('essential')}
                             className="border border-white/30 px-5 py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/80 transition-colors hover:border-white hover:text-white active:scale-[0.98]"
                         >
-                            Solo esenciales
+                            Essential only
                         </button>
                     </div>
 
                     <button
                         type="button"
                         onClick={() => choose('essential')}
-                        aria-label="Cerrar y conservar solo esenciales"
+                        aria-label="Close and keep essential cookies only"
                         className="absolute right-3 top-3 text-white/40 transition-colors hover:text-white md:right-4 md:top-4"
                     >
                         <X className="h-4 w-4" strokeWidth={1.5} />

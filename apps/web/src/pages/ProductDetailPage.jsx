@@ -105,7 +105,7 @@ function ProductDetailPage() {
                     <XCircle className="mx-auto mb-4 h-10 w-10 text-[#5A1825]" strokeWidth={1.5} />
                     <p className="text-sm font-light text-neutral-500">{error}</p>
                     <Link to="/store" className="mt-6 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-black hover:text-[#5A1825]">
-                        <ArrowLeft className="h-4 w-4" strokeWidth={1.5} /> 返回商店 / Back to Shop
+                        <ArrowLeft className="h-4 w-4" strokeWidth={1.5} /> Back to Shop
                     </Link>
                 </div>
             </div>
@@ -125,9 +125,9 @@ function ProductDetailPage() {
     return (
         <div className="min-h-screen bg-[#F7F5F0] font-body text-black antialiased">
             <Helmet>
-                <title>{product.title} — SATURNA | 商店</title>
+                <title>{product.title} — SATURNA | Shop</title>
                 <meta name="description" content={product.subtitle || product.title} />
-                <html lang="zh-Hans" />
+                <html lang="en" />
                 <link rel="icon" type="image/png" href={SATURNA_LOGO} />
             </Helmet>
             <Seo
@@ -153,13 +153,13 @@ function ProductDetailPage() {
                             to="/store"
                             className="text-[11px] font-semibold uppercase tracking-[0.25em] text-black/70 transition-colors hover:text-black"
                         >
-                            商店 / SHOP
+                            SHOP
                         </Link>
                         <Link
                             to="/about"
                             className="hidden text-[11px] font-semibold uppercase tracking-[0.25em] text-black/70 transition-colors hover:text-black sm:inline"
                         >
-                            关于 / ABOUT
+                            ABOUT
                         </Link>
                     </div>
                 </div>
@@ -167,7 +167,7 @@ function ProductDetailPage() {
 
             <div className="mx-auto max-w-7xl px-5 pt-28 md:px-8 md:pt-36">
                 <Link to="/store" className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.25em] text-neutral-500 transition-colors hover:text-black">
-                    <ArrowLeft className="h-4 w-4" strokeWidth={1.5} /> 返回商店 / Back to Shop
+                    <ArrowLeft className="h-4 w-4" strokeWidth={1.5} /> Back to Shop
                 </Link>
 
                 <div className="mt-10 grid gap-12 md:grid-cols-2 md:gap-16">
@@ -204,7 +204,7 @@ function ProductDetailPage() {
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }} className="flex flex-col">
                         <p className="mb-3 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.4em] text-[#5A1825]">
                             <span className="inline-block h-px w-10 bg-[#5A1825]" />
-                            SATURNA 工作室 · ATELIER
+                            SATURNA ATELIER
                         </p>
                         <h1 className="font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-black md:text-5xl">{product.title}</h1>
                         {product.subtitle && <p className="mt-3 text-base font-light text-neutral-500">{product.subtitle}</p>}
@@ -261,7 +261,7 @@ function ProductDetailPage() {
                                 disabled={!canAddToCart || !product.purchasable}
                                 className="group flex w-full items-center justify-center gap-3 border border-black bg-black px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-white transition-colors duration-300 hover:border-[#5A1825] hover:bg-[#5A1825] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                             >
-                                <ShoppingBag className="h-4 w-4" strokeWidth={1.5} /> 加入购物袋 / ADD TO BAG
+                                <ShoppingBag className="h-4 w-4" strokeWidth={1.5} /> ADD TO BAG
                             </button>
 
                             {isStockManaged && canAddToCart && product.purchasable && (
@@ -302,7 +302,7 @@ function ProductDetailPage() {
                     <LaceDivider />
                     <div className="py-12 text-center">
                         <Link to="/store" className="group inline-flex items-center gap-3 border-b border-black pb-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-black transition-colors hover:text-[#5A1825]">
-                            查看全部商店 / VIEW SHOP
+                            VIEW SHOP
                             <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" strokeWidth={1.5} />
                         </Link>
                     </div>

@@ -6,8 +6,9 @@ import { Menu, X, Loader2, Plus } from 'lucide-react';
 import { getProducts, getCategories } from '@/api/EcommerceApi';
 import { useCart } from '@/hooks/useCart';
 import { useToast } from '@/hooks/use-toast';
-import { useGeoMarket, MARKETS } from '@/context/CurrencyContext';
+import { useGeoMarket } from '@/context/CurrencyContext';
 import Seo from '@/components/Seo';
+import RegionSwitcher from '@/components/RegionSwitcher';
 
 /* User editorial photography — SATURNA dark modern luxury */
 const IMG = {
@@ -109,31 +110,6 @@ function useProducts() {
     return { products, loading, categoryMap };
 }
 
-function CnMarketSelector({ light }) {
-    const { marketId, selectMarket, autoDetecting } = useGeoMarket();
-    return (
-        <label className="inline-flex items-center gap-1.5">
-            <select
-                value={marketId}
-                onChange={(e) => selectMarket(e.target.value)}
-                className={`cursor-pointer border-0 bg-transparent py-1 text-[10px] font-medium uppercase tracking-[0.16em] outline-none ${
-                    light ? 'text-neutral-600 hover:text-black' : 'text-neutral-400 hover:text-white'
-                }`}
-                aria-label="Market"
-            >
-                {MARKETS.map((m) => (
-                    <option key={m.id} value={m.id}>
-                        {m.flag} {m.region} · {m.currency.code}
-                    </option>
-                ))}
-            </select>
-            {autoDetecting ? (
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#5A1825]" aria-hidden="true" />
-            ) : null}
-        </label>
-    );
-}
-
 function Header({ onOpenCart, cartCount }) {
     const [open, setOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -151,7 +127,7 @@ function Header({ onOpenCart, cartCount }) {
                 <div className="flex items-center justify-center gap-4 border-b border-black/5 px-4 py-1.5 text-[10px] uppercase tracking-[0.22em] text-neutral-500">
                     <span>CHINA / HONG KONG</span>
                     <span className="text-neutral-300">·</span>
-                    <CnMarketSelector light />
+                    <RegionSwitcher light />
                 </div>
                 <header
                     className={`mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-5 py-3.5 transition-shadow md:px-8 ${
@@ -236,7 +212,7 @@ function Header({ onOpenCart, cartCount }) {
                     </nav>
                     <div className="mt-8 space-y-3 px-5 text-[11px] uppercase tracking-[0.2em] text-neutral-600">
                         <p>搜索 · 账户 · 收藏 · 购物袋</p>
-                        <CnMarketSelector light />
+                        <RegionSwitcher light />
                     </div>
                 </div>
             ) : null}
@@ -609,11 +585,18 @@ function mapLiveProduct(p, i, categoryMap) {
 }
 
 export default function ChinaBoutiquePage() {
-    const { formatFromUsdCents, market } = useGeoMarket();
+    const { formatFromUsdCents, market, selectMarket } = useGeoMarket();
     const { addToCart, cartItems } = useCart();
     const { toast } = useToast();
     const { products, loading, categoryMap } = useProducts();
     const reduce = useReducedMotion();
+
+    // Pin the Geo-Market engine to China so prices and checkout locale follow
+    // this route, the same way RegionalBoutiquePage pins US/CO/HK.
+    useEffect(() => {
+        if (market.id !== 'CN') selectMarket('CN');
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const cartCount = (cartItems || []).reduce((n, i) => n + (i.quantity || 0), 0);
 
@@ -665,6 +648,7 @@ export default function ChinaBoutiquePage() {
     return (
         <div className="min-h-screen bg-[#F7F5F0] font-body text-black antialiased">
             <Helmet>
+                <html lang="zh-CN" />
                 <title>SATURNA™ China / Hong Kong — Dark Modern Luxury</title>
                 <meta
                     name="description"
