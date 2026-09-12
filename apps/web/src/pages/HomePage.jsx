@@ -1,19 +1,22 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Plus, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, ChevronLeft, ChevronRight, Plus, X } from 'lucide-react';
 import BrandHeader from '@/components/BrandHeader';
 import BrandFooter from '@/components/BrandFooter';
 import PieceCard, { addPieceToCart } from '@/components/PieceCard';
+import AutoCrossfade from '@/components/AutoCrossfade';
 import Seo from '@/components/Seo';
 import { useCart } from '@/hooks/useCart';
 import { useToast } from '@/hooks/use-toast';
 import { useGeoMarket } from '@/context/CurrencyContext';
 import { SATURNA_OG_IMAGE } from '@/lib/brand';
 import { PHOTOS } from '@/lib/brandImagery';
-import { COLLECTIONS, LOOKS, STORIES, getProduct, getLookProducts } from '@/lib/saturnaCollections';
+import { COLLECTIONS, LOOKS, STORIES, getProduct, getProductsByCollection, getLookProducts } from '@/lib/saturnaCollections';
 
 const NEW_DROP_SKUS = ['SAT-101', 'SAT-201', 'SAT-301', 'SAT-401'];
+const EDIT_SKUS = ['SAT-101', 'SAT-201', 'SAT-303', 'SAT-105', 'SAT-402', 'SAT-306', 'SAT-206', 'SAT-505'];
 const FEATURED_LOOK = LOOKS[0]; // Rebel Night
 
 function Hero() {
@@ -65,6 +68,48 @@ function NewDrop() {
   );
 }
 
+function ShopTheEdit() {
+  const scrollerRef = useRef(null);
+  const pieces = useMemo(() => EDIT_SKUS.map(getProduct).filter(Boolean), []);
+
+  const scrollBy = (dir) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * (el.clientWidth * 0.85), behavior: 'smooth' });
+  };
+
+  return (
+    <section className="border-t border-white/5 bg-[#0A0A0A] py-20 md:py-28">
+      <div className="mx-auto flex max-w-[1440px] items-end justify-between px-5 md:px-8">
+        <div>
+          <h2 className="font-display text-4xl font-bold uppercase tracking-tight text-white md:text-5xl">Shop the Edit</h2>
+          <p className="mt-2 max-w-md text-sm font-light leading-relaxed text-smoke">
+            Swipe through a mix pulled from every collection.
+          </p>
+        </div>
+        <div className="hidden shrink-0 gap-2 md:flex">
+          <button type="button" onClick={() => scrollBy(-1)} aria-label="Previous" className="border border-white/20 p-2.5 text-white transition-colors hover:border-white">
+            <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
+          </button>
+          <button type="button" onClick={() => scrollBy(1)} aria-label="Next" className="border border-white/20 p-2.5 text-white transition-colors hover:border-white">
+            <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
+          </button>
+        </div>
+      </div>
+      <div
+        ref={scrollerRef}
+        className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] md:px-8 [&::-webkit-scrollbar]:hidden"
+      >
+        {pieces.map((p) => (
+          <div key={p.sku} className="w-[62%] shrink-0 snap-start sm:w-[34%] lg:w-[22%]">
+            <PieceCard piece={p} />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function CollectionsGallery() {
   return (
     <section id="collections" className="scroll-mt-24 bg-[#F7F5F0] px-5 py-20 md:px-8 md:py-28">
@@ -74,9 +119,11 @@ function CollectionsGallery() {
           Five collections, one identity. Each edit brings its own silhouette, mood and pace.
         </p>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {COLLECTIONS.map((c) => (
+          {COLLECTIONS.map((c) => {
+            const preview = [c.image, ...getProductsByCollection(c.slug).slice(0, 2).map((p) => p.image)];
+            return (
             <Link key={c.slug} to={`/collections/${c.slug}`} className="group relative block aspect-[4/5] overflow-hidden bg-neutral-900">
-              <img src={c.image} alt={c.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" loading="lazy" />
+              <AutoCrossfade images={preview} alt={c.name} className="transition-transform duration-700 group-hover:scale-[1.04]" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 text-white">
                 <p className="text-[10px] uppercase tracking-[0.22em] text-white/70">{c.nameZh}</p>
@@ -87,7 +134,8 @@ function CollectionsGallery() {
                 </span>
               </div>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -130,12 +178,20 @@ function ShopTheLook() {
 
         <div className="relative mx-auto aspect-[3/4] max-w-2xl overflow-hidden bg-neutral-900 md:aspect-video md:max-w-none">
           <img src={FEATURED_LOOK.image} alt={FEATURED_LOOK.name} className="h-full w-full object-cover" loading="lazy" />
-          {FEATURED_LOOK.hotspots.map((h) => {
+          {FEATURED_LOOK.hotspots.map((h, i) => {
             const piece = pieces.find((p) => p.sku === h.sku);
             if (!piece) return null;
             const isActive = active === h.sku;
             return (
-              <div key={h.sku} className="absolute" style={{ left: `${h.x}%`, top: `${h.y}%` }}>
+              <motion.div
+                key={h.sku}
+                className="absolute"
+                style={{ left: `${h.x}%`, top: `${h.y}%` }}
+                initial={{ opacity: 0, scale: 0.4 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.4, delay: 0.3 + i * 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
                 <button
                   type="button"
                   onClick={() => setActive(isActive ? null : h.sku)}
@@ -158,7 +214,7 @@ function ShopTheLook() {
                     </div>
                   </div>
                 ) : null}
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -166,7 +222,15 @@ function ShopTheLook() {
         <div className="mx-auto mt-8 flex max-w-2xl flex-col gap-4 border border-white/10 bg-white/[0.03] p-6 sm:flex-row sm:items-center sm:justify-between md:max-w-none">
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm font-light text-smoke">
             {pieces.map((p, i) => (
-              <span key={p.sku}>{p.name} — {formatFromUsdCents(p.priceInCents)}{i < pieces.length - 1 ? ' +' : ''}</span>
+              <motion.span
+                key={p.sku}
+                initial={{ opacity: 0, y: 6 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.4, delay: 0.5 + i * 0.35 }}
+              >
+                {p.name} — {formatFromUsdCents(p.priceInCents)}{i < pieces.length - 1 ? ' +' : ''}
+              </motion.span>
             ))}
           </div>
           <button
@@ -252,6 +316,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <NewDrop />
+        <ShopTheEdit />
         <CollectionsGallery />
         <ShopTheLook />
         <ProductWall />
