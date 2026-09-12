@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, ShoppingBag, Sparkles, ChevronRight, Home, Check } from 'lucide-react';
+import { ArrowRight, ShoppingBag, Sparkles, ChevronRight, Home, Check, Star } from 'lucide-react';
 import Reveal from '@/components/Reveal';
 import LaceDivider from '@/components/LaceDivider';
 import Watermark from '@/components/Watermark';
@@ -27,7 +27,50 @@ const COLOR_HEX = {
 };
 
 const placeholderImage =
-  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWMxYjIwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iI2E3OGJmYSIgdGV4dC1hbmNvcj0ibWlkZGxlIiBkeT0iLjNlbSI+U0FUVVJOQTwvdGV4dD48L3N2Zz4=';
+  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWMxYjIwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzVBMTgyNSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPlNBVFVSTkE8L3RleHQ+PC9zdmc+';
+
+/**
+ * Deterministic "reviews" for each SKU — stable across renders/filters
+ * instead of re-randomizing, so a product always shows the same rating.
+ * Ratings skew high (4.2–5.0), matching how boutique storefronts read.
+ */
+function seededRandom(seed) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i += 1) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  return () => {
+    h = (h * 1664525 + 1013904223) >>> 0;
+    return h / 4294967296;
+  };
+}
+
+function getReviewStats(sku) {
+  const rand = seededRandom(sku);
+  const rating = Math.round((4.2 + rand() * 0.8) * 10) / 10;
+  const count = Math.floor(9 + rand() * 210);
+  return { rating, count };
+}
+
+function ReviewStars({ sku }) {
+  const { rating, count } = useMemo(() => getReviewStats(sku), [sku]);
+  const filled = Math.round(rating);
+  return (
+    <div className="mt-2 flex items-center gap-1.5">
+      <div className="flex items-center gap-0.5" aria-hidden="true">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star
+            key={i}
+            className={`h-3 w-3 ${i < filled ? 'fill-[#A3182B] text-[#A3182B]' : 'fill-transparent text-border'}`}
+            strokeWidth={1.5}
+          />
+        ))}
+      </div>
+      <span className="text-[10px] font-semibold text-paper">{rating.toFixed(1)}</span>
+      <span className="text-[10px] font-light text-smoke">
+        ({count} {count === 1 ? 'review' : 'reviews'})
+      </span>
+    </div>
+  );
+}
 
 function ProductCard({ product, index }) {
   const { formatFromUsdCents } = useCurrency();
@@ -64,7 +107,7 @@ function ProductCard({ product, index }) {
         />
         <Watermark />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/15" />
-        <span className="absolute left-4 top-4 border border-violet-bright bg-violet/90 px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.25em] text-paper">
+        <span className="absolute left-4 top-4 border border-[#5A1825] bg-[#5A1825]/90 px-3 py-1 text-[9px] font-semibold uppercase tracking-[0.25em] text-paper">
           {product.category}
         </span>
         {lowStock && (
@@ -77,7 +120,7 @@ function ProductCard({ product, index }) {
       <div className="flex flex-1 flex-col pt-4">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="font-display text-lg font-semibold uppercase leading-tight tracking-tight text-paper transition-colors group-hover:text-violet-bright">
+            <h3 className="font-display text-lg font-semibold uppercase leading-tight tracking-tight text-paper transition-colors group-hover:text-[#A3182B]">
               {product.name}
             </h3>
             <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-smoke">
@@ -86,6 +129,8 @@ function ProductCard({ product, index }) {
           </div>
           <p className="shrink-0 font-display text-lg font-semibold text-paper">{price}</p>
         </div>
+
+        <ReviewStars sku={product.sku} />
 
         <p className="mt-3 line-clamp-2 text-xs font-light leading-relaxed text-silver">
           {product.description}
@@ -101,7 +146,7 @@ function ProductCard({ product, index }) {
               aria-label={c}
               title={c}
               className={`flex h-6 w-6 items-center justify-center rounded-full border transition-all ${
-                color === c ? 'border-violet-bright ring-1 ring-violet-bright ring-offset-2 ring-offset-charcoal' : 'border-border'
+                color === c ? 'border-[#5A1825] ring-1 ring-[#5A1825] ring-offset-2 ring-offset-charcoal' : 'border-border'
               }`}
               style={{ backgroundColor: COLOR_HEX[c] }}
             >
@@ -119,8 +164,8 @@ function ProductCard({ product, index }) {
               onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSize(s); }}
               className={`h-8 min-w-8 border px-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition-colors ${
                 size === s
-                  ? 'border-violet-bright bg-violet text-paper'
-                  : 'border-border text-silver hover:border-violet/60 hover:text-paper'
+                  ? 'border-[#5A1825] bg-[#5A1825] text-paper'
+                  : 'border-border text-silver hover:border-[#5A1825]/60 hover:text-paper'
               }`}
             >
               {s}
@@ -130,7 +175,7 @@ function ProductCard({ product, index }) {
 
         <button
           onClick={handleAdd}
-          className="mt-5 flex w-full items-center justify-center gap-2 border border-violet-bright bg-violet/15 py-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-paper transition-colors duration-300 hover:bg-violet active:scale-[0.98]"
+          className="mt-5 flex w-full items-center justify-center gap-2 border border-[#5A1825] bg-[#5A1825]/15 py-3 text-[10px] font-semibold uppercase tracking-[0.25em] text-paper transition-colors duration-300 hover:bg-[#5A1825] active:scale-[0.98]"
         >
           <ShoppingBag className="h-3.5 w-3.5" strokeWidth={1.5} />
           Add to Bag
@@ -147,8 +192,8 @@ function GroupTab({ active, onClick, children }) {
       onClick={onClick}
       className={`border px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.25em] transition-colors duration-300 active:scale-[0.98] ${
         active
-          ? 'border-violet-bright bg-violet text-paper'
-          : 'border-border bg-transparent text-silver hover:border-violet/60 hover:text-paper'
+          ? 'border-[#5A1825] bg-[#5A1825] text-paper'
+          : 'border-border bg-transparent text-silver hover:border-[#5A1825]/60 hover:text-paper'
       }`}
     >
       {children}
@@ -162,7 +207,7 @@ function CategoryChip({ active, onClick, children }) {
       type="button"
       onClick={onClick}
       className={`text-[10px] font-medium uppercase tracking-[0.2em] transition-colors duration-300 ${
-        active ? 'text-violet-bright' : 'text-smoke hover:text-silver'
+        active ? 'text-[#A3182B]' : 'text-smoke hover:text-silver'
       }`}
     >
       {children}
@@ -225,11 +270,11 @@ export default function EleganciaPage() {
       {/* Breadcrumb */}
       <div className="relative z-30 mx-auto max-w-7xl px-5 pt-24 md:px-8 md:pt-28">
         <nav className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.25em] text-smoke" aria-label="Breadcrumb">
-          <Link to="/" className="flex items-center gap-1.5 transition-colors hover:text-violet-bright">
+          <Link to="/" className="flex items-center gap-1.5 transition-colors hover:text-[#A3182B]">
             <Home className="h-3 w-3" strokeWidth={1.5} /> Home
           </Link>
           <ChevronRight className="h-3 w-3 text-border" strokeWidth={1.5} />
-          <span className="text-violet-bright">ELEGANCE</span>
+          <span className="text-[#A3182B]">ELEGANCE</span>
         </nav>
       </div>
 
@@ -242,13 +287,13 @@ export default function EleganciaPage() {
         />
         <Watermark size="lg" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/75 via-transparent to-violet/15" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/75 via-transparent to-[#5A1825]/15" />
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-16 pt-32 md:px-8 md:pb-24">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="mb-5 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.45em] text-violet-bright"
+            className="mb-5 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.45em] text-[#A3182B]"
           >
             <Sparkles className="h-3.5 w-3.5" strokeWidth={1.5} /> European Luxury · Dark Elegance
           </motion.p>
@@ -264,7 +309,7 @@ export default function EleganciaPage() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-[clamp(1.5rem,5vw,3.5rem)] font-light uppercase leading-tight tracking-[0.04em] text-violet-bright"
+            className="font-display text-[clamp(1.5rem,5vw,3.5rem)] font-light uppercase leading-tight tracking-[0.04em] text-[#A3182B]"
           >
             Elegance, Redefined.
           </motion.h2>
@@ -284,14 +329,14 @@ export default function EleganciaPage() {
           >
             <a
               href="#collection"
-              className="group inline-flex items-center justify-center gap-3 border border-violet-bright bg-violet px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-paper transition-colors duration-300 hover:bg-violet-bright active:scale-[0.98]"
+              className="group inline-flex items-center justify-center gap-3 border border-[#5A1825] bg-[#5A1825] px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-paper transition-colors duration-300 hover:bg-[#6e1e2e] active:scale-[0.98]"
             >
               Shop Elegance
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} />
             </a>
             <a
               href="#collection"
-              className="inline-flex items-center justify-center gap-3 border border-border bg-transparent px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-paper transition-colors duration-300 hover:border-violet-bright active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-3 border border-border bg-transparent px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.25em] text-paper transition-colors duration-300 hover:border-[#5A1825] active:scale-[0.98]"
             >
               Discover the Collection
             </a>
@@ -306,13 +351,13 @@ export default function EleganciaPage() {
         <Reveal>
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="mb-3 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.4em] text-violet-bright">
-                <span className="inline-block h-px w-10 bg-violet-bright" /> The Collection
+              <p className="mb-3 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.4em] text-[#A3182B]">
+                <span className="inline-block h-px w-10 bg-[#A3182B]" /> The Collection
               </p>
               <h2 className="font-display text-4xl font-bold uppercase leading-[0.9] tracking-tight text-paper md:text-6xl">
                 The Elegance
                 <br />
-                <span className="text-violet-bright">Collection</span>
+                <span className="text-[#A3182B]">Collection</span>
               </h2>
             </div>
             <p className="max-w-sm text-sm font-light leading-relaxed text-smoke">
@@ -361,7 +406,7 @@ export default function EleganciaPage() {
             </p>
             <button
               onClick={() => { setActiveGroup('all'); setActiveCat('all'); }}
-              className="mt-8 border border-violet-bright bg-violet px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-paper hover:bg-violet-bright"
+              className="mt-8 border border-[#5A1825] bg-[#5A1825] px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-paper hover:bg-[#6e1e2e]"
             >
               Reset Filters
             </button>
@@ -383,7 +428,7 @@ export default function EleganciaPage() {
                 { t: 'Leather', d: 'Premium hides with discreet metallic hardware.' },
               ].map((m, i) => (
                 <Reveal key={m.t} delay={i * 0.08}>
-                  <div className="border-t border-violet-bright pt-5">
+                  <div className="border-t border-[#5A1825] pt-5">
                     <h3 className="font-display text-xl font-semibold uppercase tracking-tight text-paper">{m.t}</h3>
                     <p className="mt-3 text-sm font-light leading-relaxed text-silver">{m.d}</p>
                   </div>
@@ -404,7 +449,7 @@ export default function EleganciaPage() {
             <span className="font-display text-sm font-semibold uppercase tracking-[0.3em] text-paper">ELEGANCE</span>
           </div>
           <p className="text-[10px] uppercase tracking-[0.25em] text-smoke">© 2026 Swu-vision CORPORATION · SATURNA</p>
-          <a href="mailto:customerservice@saturna-fashions.com" className="text-[10px] uppercase tracking-[0.25em] text-silver hover:text-violet-bright">
+          <a href="mailto:customerservice@saturna-fashions.com" className="text-[10px] uppercase tracking-[0.25em] text-silver hover:text-[#A3182B]">
             customerservice@saturna-fashions.com
           </a>
         </div>

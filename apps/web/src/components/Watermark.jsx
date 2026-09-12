@@ -28,7 +28,7 @@ export default function Watermark({ position = 'top-right', className = '', size
     return (
         <span
             aria-hidden="true"
-            className={`pointer-events-none absolute z-20 inline-flex items-center border border-violet-bright/40 bg-ink/45 font-display font-semibold uppercase text-paper/85 backdrop-blur-[2px] ${sizeClass} ${posClass} ${className}`}
+            className={`pointer-events-none absolute z-20 inline-flex items-center border border-[#5A1825]/40 bg-ink/45 font-display font-semibold uppercase text-paper/85 backdrop-blur-[2px] ${sizeClass} ${posClass} ${className}`}
             style={{ textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}
         >
             SATURNA
