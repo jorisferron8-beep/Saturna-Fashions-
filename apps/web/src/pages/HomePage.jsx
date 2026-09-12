@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -7,6 +7,7 @@ import BrandHeader from '@/components/BrandHeader';
 import BrandFooter from '@/components/BrandFooter';
 import PieceCard, { addPieceToCart } from '@/components/PieceCard';
 import AutoCrossfade from '@/components/AutoCrossfade';
+import Marquee from '@/components/Marquee';
 import Seo from '@/components/Seo';
 import { useCart } from '@/hooks/useCart';
 import { useToast } from '@/hooks/use-toast';
@@ -20,27 +21,106 @@ const EDIT_SKUS = ['SAT-101', 'SAT-201', 'SAT-303', 'SAT-105', 'SAT-402', 'SAT-3
 const FEATURED_LOOK = LOOKS[0]; // Rebel Night
 
 function Hero() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const reduceMotion = useRef(
+    typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false,
+  );
+  const active = COLLECTIONS[index];
+
+  useEffect(() => {
+    if (paused || reduceMotion.current) return undefined;
+    const id = setInterval(() => setIndex((i) => (i + 1) % COLLECTIONS.length), 4500);
+    return () => clearInterval(id);
+  }, [paused]);
+
   return (
-    <section className="relative flex min-h-[92dvh] items-end overflow-hidden bg-[#0A0A0A]">
-      <img src={PHOTOS.streetLuxeBomber} alt="SATURNA — Dark. Feminine. Unbound." className="absolute inset-0 h-full w-full object-cover object-[center_20%]" />
+    <section
+      className="relative flex min-h-[92dvh] items-end overflow-hidden bg-[#0A0A0A]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {COLLECTIONS.map((c, i) => (
+        <img
+          key={c.slug}
+          src={c.image}
+          alt={c.name}
+          aria-hidden={i !== index}
+          loading={i === 0 ? undefined : 'lazy'}
+          className={`absolute inset-0 h-full w-full object-cover object-[center_20%] transition-opacity duration-1000 ease-in-out ${i === index ? 'opacity-100' : 'opacity-0'}`}
+        />
+      ))}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/15" />
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col justify-end px-5 pb-20 pt-32 md:px-8 md:pb-28">
-        <h1 className="font-display text-6xl font-bold uppercase leading-[0.88] tracking-tight text-white md:text-8xl lg:text-9xl">
-          SATURNA
-        </h1>
-        <p className="mt-4 font-display text-xl font-semibold uppercase tracking-[0.2em] text-[#A3182B] md:text-3xl">
-          Dark. Feminine. Unbound.
-        </p>
+        <p className="font-display text-sm font-semibold uppercase tracking-[0.4em] text-white/70 md:text-base">SATURNA</p>
+        <motion.div key={active.slug} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
+          <h1 className="mt-2 font-display text-6xl font-bold uppercase leading-[0.88] tracking-tight text-white md:text-8xl lg:text-9xl">
+            {active.name}
+          </h1>
+          <p className="mt-4 max-w-lg font-display text-xl font-semibold uppercase tracking-[0.08em] text-[#A3182B] md:text-2xl">
+            {active.tagline}
+          </p>
+        </motion.div>
         <div className="mt-10 flex flex-wrap gap-3">
-          <a href="#new-drop" className="inline-flex items-center bg-white px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-black transition-colors hover:bg-[#F7F5F0]">
-            Shop New Collection
-          </a>
+          <Link to={`/collections/${active.slug}`} className="inline-flex items-center bg-white px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-black transition-colors hover:bg-[#F7F5F0]">
+            Shop {active.name}
+          </Link>
           <a href="#collections" className="inline-flex items-center border border-white/70 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-white transition-colors hover:bg-white hover:text-black">
             Discover SATURNA
           </a>
         </div>
+        <div className="mt-8 flex gap-2" role="tablist" aria-label="Featured collection">
+          {COLLECTIONS.map((c, i) => (
+            <button
+              key={c.slug}
+              type="button"
+              role="tab"
+              aria-selected={i === index}
+              aria-label={c.name}
+              onClick={() => setIndex(i)}
+              className={`h-1 w-8 transition-colors ${i === index ? 'bg-white' : 'bg-white/30 hover:bg-white/50'}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
+  );
+}
+
+function CollectionsTicker() {
+  return (
+    <Marquee
+      items={COLLECTIONS}
+      className="border-y border-white/5 bg-[#0A0A0A] py-4"
+      itemClassName="flex shrink-0 items-center"
+      renderItem={(c) => (
+        <Link
+          to={`/collections/${c.slug}`}
+          className="mx-4 font-display text-lg font-bold uppercase tracking-tight text-white/80 transition-colors hover:text-[#A3182B] md:text-2xl"
+        >
+          {c.name}
+          <span className="ml-4 text-white/25">→</span>
+        </Link>
+      )}
+    />
+  );
+}
+
+function BrandStrip() {
+  const words = ['SATURNA', 'DARK FEMININE', 'SATURNA', 'DARK REBEL', 'SATURNA', 'NIGHT EDIT', 'SATURNA', 'STREET LUXE'];
+  return (
+    <Marquee
+      items={words}
+      className="border-y border-black/5 bg-[#F7F5F0] py-6"
+      itemClassName="flex shrink-0 items-center"
+      renderItem={(w, i) => (
+        <span className={`mx-6 font-display text-2xl font-bold uppercase tracking-tight md:text-4xl ${i % 2 === 0 ? 'text-black/10' : 'text-[#5A1825]/70'}`}>
+          {w}
+        </span>
+      )}
+    />
   );
 }
 
@@ -70,6 +150,12 @@ function NewDrop() {
 
 function ShopTheEdit() {
   const scrollerRef = useRef(null);
+  const [paused, setPaused] = useState(false);
+  const reduceMotion = useRef(
+    typeof window !== 'undefined' && window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : false,
+  );
   const pieces = useMemo(() => EDIT_SKUS.map(getProduct).filter(Boolean), []);
 
   const scrollBy = (dir) => {
@@ -77,6 +163,17 @@ function ShopTheEdit() {
     if (!el) return;
     el.scrollBy({ left: dir * (el.clientWidth * 0.85), behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    if (paused || reduceMotion.current) return undefined;
+    const id = setInterval(() => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 8;
+      el.scrollTo({ left: atEnd ? 0 : el.scrollLeft + el.clientWidth * 0.32, behavior: 'smooth' });
+    }, 3500);
+    return () => clearInterval(id);
+  }, [paused]);
 
   return (
     <section className="border-t border-white/5 bg-[#0A0A0A] py-20 md:py-28">
@@ -88,16 +185,19 @@ function ShopTheEdit() {
           </p>
         </div>
         <div className="hidden shrink-0 gap-2 md:flex">
-          <button type="button" onClick={() => scrollBy(-1)} aria-label="Previous" className="border border-white/20 p-2.5 text-white transition-colors hover:border-white">
+          <button type="button" onClick={() => { setPaused(true); scrollBy(-1); }} aria-label="Previous" className="border border-white/20 p-2.5 text-white transition-colors hover:border-white">
             <ChevronLeft className="h-4 w-4" strokeWidth={1.5} />
           </button>
-          <button type="button" onClick={() => scrollBy(1)} aria-label="Next" className="border border-white/20 p-2.5 text-white transition-colors hover:border-white">
+          <button type="button" onClick={() => { setPaused(true); scrollBy(1); }} aria-label="Next" className="border border-white/20 p-2.5 text-white transition-colors hover:border-white">
             <ChevronRight className="h-4 w-4" strokeWidth={1.5} />
           </button>
         </div>
       </div>
       <div
         ref={scrollerRef}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
         className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] md:px-8 [&::-webkit-scrollbar]:hidden"
       >
         {pieces.map((p) => (
@@ -315,9 +415,11 @@ export default function HomePage() {
       <BrandHeader />
       <main>
         <Hero />
+        <CollectionsTicker />
         <NewDrop />
         <ShopTheEdit />
         <CollectionsGallery />
+        <BrandStrip />
         <ShopTheLook />
         <ProductWall />
         <Stories />

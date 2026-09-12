@@ -258,6 +258,17 @@ export const LOOKS = [
   },
 ];
 
+/** Simple client-side search across the flagship catalogue (no backend). */
+export function searchCatalog(query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return { products: [], collections: [] };
+  const products = PRODUCTS.filter(
+    (p) => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q),
+  ).slice(0, 6);
+  const collections = COLLECTIONS.filter((c) => c.name.toLowerCase().includes(q)).slice(0, 3);
+  return { products, collections };
+}
+
 export function getLook(slug) {
   return LOOKS.find((l) => l.slug === slug) || null;
 }

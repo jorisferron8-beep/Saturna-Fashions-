@@ -78,7 +78,7 @@ export default function PieceCard({ piece, dark = true }) {
         <button
           type="button"
           onClick={handleQuickAdd}
-          className="absolute bottom-0 left-0 right-0 flex translate-y-full items-center justify-center gap-2 bg-black py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white transition-transform duration-300 group-hover:translate-y-0"
+          className="absolute bottom-0 left-0 right-0 flex translate-y-0 items-center justify-center gap-2 bg-black py-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white transition-transform duration-300 md:translate-y-full md:group-hover:translate-y-0"
         >
           <Plus className="h-3.5 w-3.5" strokeWidth={1.5} /> Quick Add
         </button>
