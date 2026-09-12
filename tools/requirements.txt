@@ -1,0 +1,6 @@
+# Dependencias del sincronizador SATURNA → WooCommerce
+# Instalar con:  pip install -r requirements.txt
+
+requests>=2.31.0
+openpyxl>=3.1.2
+pandas>=2.0.0
