@@ -23,7 +23,7 @@ export const COLLECTIONS = [
       'Structured corsetry against raw denim and faux leather — the SATURNA woman who turns the street into her own runway.',
     tags: ['Gothic streetwear', 'Denim', 'Corsets', 'Mesh', 'Oversized'],
     filters: ['Tops', 'Bodies', 'Denim', 'Skirts', 'Jackets'],
-    image: IMG.hero,
+    image: IMG.street,
   },
   {
     slug: 'dark-feminine',
